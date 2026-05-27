@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prexys & co - A propos</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0d0d0d;
+      --ink2: #3a3a3a;
+      --muted: #888;
+      --border: #e8e8e4;
+      --bg: #fafaf8;
+      --white: #ffffff;
+      --accent: #0057FF;
+      --accent2: #e8f0ff;
+      --green: #00a86b;
+      --green2: #e6f9f2;
+      --r-sm: 6px;
+      --r-md: 12px;
+      --r-lg: 20px;
+      --fhead: Arial, Helvetica, sans-serif;
+      --fbody: Arial, Helvetica, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--fbody); background: var(--bg); color: var(--ink); line-height: 1.6; }
+    body * { letter-spacing: normal !important; font-stretch: normal !important; font-kerning: normal; text-rendering: optimizeLegibility; }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(250,250,248,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 64px;
+    }
+    .nav-logo {
+      font-family: var(--fhead); font-size: 18px; font-weight: 800;
+      color: var(--ink); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block; }
+    .nav-links { display: flex; align-items: center; gap: 2px; }
+    .nav-link {
+      font-size: 14px; padding: 6px 14px; border-radius: var(--r-sm);
+      color: var(--ink2); text-decoration: none; font-family: var(--fbody);
+      border: none; background: none; cursor: pointer; transition: all .15s;
+    }
+    .nav-link:hover { background: var(--border); color: var(--ink); }
+    .nav-link.active { color: var(--accent); font-weight: 500; }
+
+    .page { display: none; }
+    .page.visible { display: block; }
+
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+      max-width: 1200px; margin: 0 auto; padding: 0 2.5rem;
+      align-items: center;
+    }
+    .hero-left { padding: 4rem 3rem 4rem 0; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 500;
+      color: var(--accent); background: var(--accent2);
+      padding: 5px 12px; border-radius: 20px; margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-family: var(--fhead); font-size: 36px;
+      font-weight: 800; line-height: 1.1;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .hero-desc {
+      font-size: 17px; color: var(--ink2); line-height: 1.7;
+      max-width: 440px; margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .btn-primary, .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 15px; padding: 12px 20px; border-radius: var(--r-md);
+      border: 1px solid var(--border); cursor: pointer;
+      font-family: var(--fbody); text-decoration: none; transition: all .2s;
+    }
+    .btn-primary { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 500; }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+    .btn-ghost { background: none; color: var(--ink2); }
+    .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin-top: 3rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .hstat-val { font-family: var(--fhead); font-size: 24px; font-weight: 800; color: var(--ink); white-space: nowrap; }
+    .hstat-label { font-size: 13px; color: var(--muted); margin-top: 2px; min-height: 1.4em; }
+
+    .hero-right {
+      height: 100%; display: flex; align-items: center; justify-content: center;
+      padding: 2rem 0 2rem 2rem; position: relative;
+    }
+    .device-card {
+      width: 340px; background: var(--white); border: 1px solid var(--border);
+      border-radius: 24px; padding: 2rem; position: relative; overflow: hidden;
+    }
+    .device-card::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; background: var(--accent2);
+      border-radius: 50%;
+    }
+    .device-label { font-size: 11px; font-weight: 500; color: var(--muted); margin-bottom: 1rem; }
+    .device-name { font-family: var(--fhead); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .device-sub { font-size: 13px; color: var(--muted); margin-bottom: 1.75rem; }
+    .laser-vis {
+      background: #0d0d0d; border-radius: var(--r-md); height: 100px;
+      position: relative; overflow: hidden; margin-bottom: 1.5rem;
+    }
+    .lv-source {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      width: 12px; height: 12px; background: var(--accent); border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+    }
+    .lv-beam {
+      position: absolute; top: 50%; left: 28px; height: 2px; width: 0;
+      background: linear-gradient(90deg, rgba(0,87,255,.8), rgba(0,87,255,.1));
+      transform: translateY(-50%); animation: lbeam 2.4s ease-in-out infinite;
+    }
+    @keyframes lbeam {
+      0% { width: 0; opacity: 1; }
+      55% { width: calc(100% - 44px); opacity: 1; }
+      75% { width: calc(100% - 44px); opacity: .3; }
+      100% { width: 0; opacity: 0; }
+    }
+    .lv-target {
+      position: absolute; right: 12px; top: 15%; height: 70%; width: 6px;
+      background: #2a2a2a; border-radius: 2px;
+    }
+    .lv-dot {
+      position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
+      width: 5px; height: 5px; background: var(--accent); border-radius: 50%;
+      animation: ldot 2.4s ease-in-out infinite; opacity: 0;
+    }
+    @keyframes ldot { 55% { opacity: 0; } 60%, 80% { opacity: 1; } 100% { opacity: 0; } }
+    .device-readout { display: flex; justify-content: space-between; align-items: center; }
+    .readout-dist { font-family: var(--fhead); font-size: 32px; font-weight: 800; color: var(--ink); }
+    .readout-unit { font-size: 14px; color: var(--muted); font-weight: 500; }
+    .readout-badge {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--green2); color: var(--green);
+      font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 20px;
+    }
+    .pulse-dot {
+      width: 7px; height: 7px; background: var(--green); border-radius: 50%;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
+    .floating-chip {
+      position: absolute; background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 10px 14px; font-size: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+    }
+    .chip-top { top: 60px; right: -20px; }
+    .chip-bot { bottom: 80px; left: -20px; }
+    .chip-val { font-family: var(--fhead); font-size: 16px; font-weight: 700; color: var(--ink); }
+    .chip-lbl { color: var(--muted); font-size: 11px; margin-top: 1px; }
+
+    .section-wrap { max-width: 1200px; margin: 0 auto; padding: 5rem 2.5rem; }
+    .section-eyebrow { font-size: 12px; font-weight: 500; color: var(--accent); margin-bottom: 0.75rem; }
+    .section-h2 {
+      font-family: var(--fhead); font-size: 28px;
+      font-weight: 800; color: var(--ink); margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .section-lead { font-size: 16px; color: var(--ink2); max-width: 620px; line-height: 1.7; margin-bottom: 3rem; }
+    .divider { height: 1px; background: var(--border); margin: 0; }
+
+    .features-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      border-radius: var(--r-lg); overflow: hidden; margin-bottom: 3rem;
+    }
+    .feat-item { background: var(--white); padding: 1.75rem 1.5rem; }
+    .feat-icon { font-size: 24px; color: var(--accent); margin-bottom: 0.75rem; }
+    .feat-title { font-size: 15px; font-weight: 600; font-family: var(--fhead); color: var(--ink); margin-bottom: 4px; }
+    .feat-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+    .product-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg);
+      padding: 2rem; transition: all .2s; position: relative; overflow: hidden;
+    }
+    .product-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,87,255,.08); }
+    .product-card.featured { display: flex; flex-direction: column; }
+    .product-badge {
+      display: inline-block; font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 1rem;
+    }
+    .badge-new { background: var(--accent2); color: var(--accent); }
+    .badge-pro { background: #fff3e0; color: #e65100; }
+    .badge-std { background: var(--green2); color: var(--green); }
+    .product-name { font-family: var(--fhead); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+    .product-desc { font-size: 14px; color: var(--ink2); line-height: 1.6; margin-bottom: 1.5rem; }
+    .product-specs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+    .spec-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-size: 13px; }
+    .spec-key { color: var(--muted); }
+    .spec-val { font-weight: 500; color: var(--ink); font-family: var(--fhead); font-size: 12px; text-align: right; }
+    .product-note { font-size: 13px; color: var(--muted); font-style: italic; }
+    .product-visual {
+      background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+      border-radius: var(--r-md); padding: 2rem; text-align: center; min-height: 220px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+    }
+    .pv-icon { font-size: 56px; color: var(--accent); line-height: 1; }
+    .pv-label { font-size: 12px; color: var(--ink2); }
+    .pv-dist { font-family: var(--fhead); font-size: 36px; font-weight: 800; color: var(--accent); }
+    .tag-row { display: flex; gap: 8px; margin-top: 0.5rem; flex-wrap: wrap; justify-content: center; }
+    .tag-row span {
+      font-size: 11px; background: white; border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 20px; color: var(--muted);
+    }
+    .home-showcase {
+      display: grid; gap: 1rem; width: 100%; max-width: 430px;
+    }
+    .home-product {
+      background: transparent; border: 1px solid transparent;
+      border-radius: var(--r-md); padding: 1rem;
+      display: grid; grid-template-columns: auto 1fr; gap: 1rem;
+      align-items: center; box-shadow: none;
+      color: inherit; text-decoration: none; cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s, background .2s;
+      position: relative; z-index: 1; isolation: isolate;
+    }
+    .home-product:hover, .home-product:focus-visible {
+      transform: translateY(-2px); border-color: var(--border); background: var(--white); box-shadow: 0 10px 26px rgba(0,0,0,.05); outline: none; z-index: 2;
+    }
+    .home-product-icon {
+      width: 46px; height: 46px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink2); background: var(--white); border: 1px solid var(--border); font-size: 25px;
+    }
+    .home-product h3 {
+      font-size: 17px; font-family: var(--fhead); margin-bottom: 2px; color: var(--ink);
+    }
+    .home-product p { font-size: 13px; color: var(--muted); line-height: 1.45; }
+    .home-product-order { font-size: 12px; color: var(--muted); font-weight: 700; margin-bottom: 2px; user-select: none; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contact-block {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 1.25rem;
+    }
+    .contact-icon { font-size: 22px; color: var(--accent); flex-shrink: 0; }
+    .contact-label { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+    .contact-val { font-size: 15px; font-weight: 500; color: var(--ink); }
+    .form-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; }
+    .form-title { font-family: var(--fhead); font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 1.5rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
+    .form-group label { font-size: 13px; font-weight: 500; color: var(--ink2); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--r-sm);
+      font-size: 14px; font-family: var(--fbody); color: var(--ink);
+      background: var(--bg); outline: none; transition: border-color .15s;
+      resize: vertical;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--accent); background: var(--white);
+    }
+    .form-group textarea { min-height: 110px; }
+    .form-submit {
+      width: 100%; padding: 13px; background: var(--ink); color: #fff;
+      border: none; border-radius: var(--r-md); font-size: 15px; font-weight: 500;
+      font-family: var(--fbody); cursor: pointer; transition: background .15s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .form-submit:hover { background: var(--accent); }
+    .form-success {
+      display: none; text-align: center; padding: 2rem;
+      color: var(--green); font-weight: 500; font-size: 15px;
+    }
+    .form-success i { font-size: 40px; display: block; margin-bottom: 0.75rem; }
+
+    /* Mentions légales modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,.45); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--white); border-radius: var(--r-lg);
+      max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto;
+      padding: 2.5rem; position: relative; box-shadow: 0 24px 60px rgba(0,0,0,.18);
+    }
+    .modal-close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 50%;
+      width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px; color: var(--muted); transition: all .15s;
+    }
+    .modal-close:hover { background: var(--border); color: var(--ink); }
+    .modal-title { font-family: var(--fhead); font-size: 22px; font-weight: 800; color: var(--ink); margin-bottom: 1.5rem; }
+    .modal-section { margin-bottom: 1.25rem; }
+    .modal-section h3 { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: .5rem; }
+    .modal-section p, .modal-section ul { font-size: 14px; color: var(--ink2); line-height: 1.7; }
+    .modal-section ul { padding-left: 1.25rem; }
+    .modal-section ul li { margin-bottom: .25rem; }
+    .cc-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent2); color: var(--accent);
+      border-radius: var(--r-md); padding: 8px 14px; font-size: 13px; font-weight: 600;
+      text-decoration: none; margin-bottom: 1rem;
+    }
+    .cc-badge:hover { background: #d0e4ff; }
+    footer {
+      border-top: 1px solid var(--border); background: var(--white);
+      padding: 3rem 2.5rem 2rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+    .footer-brand { font-family: var(--fhead); font-size: 20px; font-weight: 800; color: var(--ink); margin-bottom: 0.75rem; }
+    .footer-tagline { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .footer-col h4 { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 0.75rem; }
+    .footer-col a { display: block; font-size: 14px; color: var(--muted); text-decoration: none; margin-bottom: 6px; transition: color .15s; }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 1.5rem; border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--muted); flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    @media(max-width:800px){
+      .hero, .product-card.featured, .contact-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 2rem; }
+      .hero-right { display: none; }
+      .hero-left { padding: 2rem 0; }
+      .products-grid, .features-strip { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:600px){
+      .nav { padding: 0 1rem; }
+      .nav-logo { font-size: 16px; }
+      .nav-link { padding: 6px 8px; font-size: 13px; }
+      .section-wrap { padding: 3rem 1.25rem; }
+      .hero { padding: 0 1.25rem; }
+      .hero-stats { flex-direction: column; gap: 1rem; }
+      .form-row, .footer-top { grid-template-columns: 1fr; }
+    }
+  
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem;
+    }
+    .about-panel {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 2rem;
+    }
+    .about-panel h3 {
+      font-family: var(--fhead); font-size: 20px; color: var(--ink); margin-bottom: .75rem;
+    }
+    .about-panel p, .about-panel li {
+      color: var(--ink2); font-size: 15px; line-height: 1.7;
+    }
+    .about-panel ul { list-style: none; display: grid; gap: .75rem; }
+    .about-panel li {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: .9rem 1rem;
+    }
+    .about-highlight {
+      background: var(--accent2); border-color: #d7e4ff;
+    }
+    @media(max-width:800px){ .about-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body><nav class="nav">
+  <a class="nav-logo" href="index.html">
+    <span class="logo-dot"></span>Prexys <span style="font-weight:400;color:var(--muted)">&amp; co</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="index.html">Accueil</a>
+    <a class="nav-link" href="produits.html">Produits</a>
+    <a class="nav-link" href="contact.html">Contact</a>
+  </div>
+</nav>
+<main class="page visible">
+  <div class="section-wrap">
+    <div class="section-eyebrow">A propos</div>
+    <h1 class="section-h2">Notre parcours</h1>
+    <p class="section-lead">Nous sommes des eleves de premiere STI2D au lycee Saint Aubin La Salle, situe a Saint-Sylvain-d'Anjou. Ce site a ete cree pour presenter nos projets durant nos annees de lycee et montrer progressivement notre travail, nos choix techniques et notre evolution.</p>
+
+    <div class="about-grid">
+      <section class="about-panel about-highlight">
+        <h3>Pourquoi ce site ?</h3>
+        <p>Prexys &amp; co sert de support de presentation pour nos prototypes. Il nous permet de regrouper les informations importantes, d'expliquer le fonctionnement de chaque projet et de rendre notre travail plus lisible pour les visiteurs.</p>
+      </section>
+      <section class="about-panel">
+        <h3>Notre formation</h3>
+        <p>La filiere STI2D nous amene a travailler sur l'innovation, la technologie, l'energie, les systemes connectes et la conception de solutions techniques. Le site reprend cet esprit en presentant des projets concrets et comprehensibles.</p>
+      </section>
+      <section class="about-panel">
+        <h3>Ce que nous voulons montrer</h3>
+        <ul>
+          <li>Notre capacite a imaginer et presenter des solutions techniques.</li>
+          <li>Notre progression dans la conception, la communication et l'explication de projets.</li>
+          <li>Le lien entre nos cours, nos prototypes et les usages possibles dans la vie reelle.</li>
+        </ul>
+      </section>
+      <section class="about-panel">
+        <h3>Nos projets actuels</h3>
+        <ul>
+          <li>Lightphone : une batterie portable rechargeable a l'energie solaire.</li>
+          <li>Barriere infrarouge : un systeme emetteur-recepteur pour detecter un passage.</li>
+          <li>T&eacute;l&eacute;m&egrave;tre &agrave; ultrason : une mesure de distance avec obstacle interactif.</li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">Prexys &amp; co</div>
+        <p class="footer-tagline">Projets de premiere STI2D.<br>Lycee Saint Aubin La Salle.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Produits</h4>
+        <a href="lightphone.html">Lightphone</a>
+        <a href="barriere-infrarouge.html">Barriere infrarouge</a>
+        <a href="telemetre.html">T&eacute;l&eacute;m&egrave;tre &agrave; ultrason</a>
+      </div>
+      <div class="footer-col">
+        <h4>Entreprise</h4>
+        <a href="a-propos.html">A propos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#" onclick="document.getElementById('modal-legal').classList.add('open');return false;">Mentions legales</a>
+        <a href="#" onclick="document.getElementById('modal-credits').classList.add('open');return false;">Credits</a>
+        <a href="#" onclick="document.getElementById('modal-privacy').classList.add('open');return false;">Confidentialite</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Prexys &amp; co - Tous droits reserves</span>
+      <span>Saint-Sylvain-d'Anjou, France</span>
+    </div>
+  </div>
+</footer>
+<!-- Mentions legales modal -->
+<div class="modal-overlay" id="modal-legal" role="dialog" aria-modal="true" aria-labelledby="modal-legal-title" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('modal-legal').classList.remove('open')" aria-label="Fermer">&times;</button>
+    <div class="modal-title" id="modal-legal-title">Mentions legales</div>
+    <div class="modal-section">
+      <h3>Editeur du site</h3>
+      <p>Prexys &amp; co est un projet scolaire realise par des eleves de premiere STI2D du lycee Saint Aubin La Salle, a Saint-Sylvain-d'Anjou.</p>
+    </div>
+    <div class="modal-section">
+      <h3>Objectif du site</h3>
+      <p>Ce site sert a presenter nos projets durant nos annees de lycee : Lightphone, la barriere infrarouge et le telemetre a ultrason.</p>
+    </div>
+    <div class="modal-section">
+      <h3>Information importante</h3>
+      <p>Les produits presentes ne sont pas proposes a la vente. Les informations, animations et mesures affichees ont une vocation pedagogique.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Credits modal -->
+<div class="modal-overlay" id="modal-credits" role="dialog" aria-modal="true" aria-labelledby="modal-credits-title" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('modal-credits').classList.remove('open')" aria-label="Fermer">&times;</button>
+    <div class="modal-title" id="modal-credits-title">Credits</div>
+    <div class="modal-section">
+      <h3>Creation du site</h3>
+      <p>Site cree par l'equipe Prexys &amp; co dans le cadre d'un projet de premiere STI2D au lycee Saint Aubin La Salle.</p>
+    </div>
+    <div class="modal-section">
+      <h3>Icones</h3>
+      <p>Les icones utilisees sur le site proviennent de la bibliotheque Tabler Icons.</p>
+    </div>
+    <div class="modal-section">
+      <h3>Contenus et animations</h3>
+      <p>Les textes, fiches produits et animations interactives ont ete realises pour illustrer nos prototypes et faciliter leur presentation.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Confidentialite modal -->
+<div class="modal-overlay" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="modal-privacy-title" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('modal-privacy').classList.remove('open')" aria-label="Fermer">&times;</button>
+    <div class="modal-title" id="modal-privacy-title">Confidentialite</div>
+    <div class="modal-section">
+      <h3>Donnees personnelles</h3>
+      <p>Le site ne collecte pas automatiquement de donnees personnelles et n'utilise pas de systeme de compte utilisateur.</p>
+    </div>
+    <div class="modal-section">
+      <h3>Formulaire de contact</h3>
+      <p>Le formulaire de contact est une simulation pour le projet. S'il est rendu fonctionnel plus tard, seules les informations saisies volontairement seront envoyees : nom, prenom, email, produit concerne, sujet et message.</p>
+    </div>
+    <div class="modal-section">
+      <h3>Cookies et suivi</h3>
+      <p>Le site n'utilise pas de cookies publicitaires, de statistiques externes ou de suivi commercial.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
